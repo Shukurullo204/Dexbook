@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework'
     "users",
     "auth_2fa",
     "books",
@@ -106,9 +107,15 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
-TIME_ZONE = 'UTC'
+# settings.py
+
+# Меняем UTC на Ташкент
+TIME_ZONE = 'Asia/Tashkent'
+
+# Убедись, что эта настройка тоже равна True (она позволяет Django корректно работать с датами в БД)
+USE_TZ = True
 
 USE_I18N = True
 
@@ -126,10 +133,32 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+# settings.py
 
+# Делаем медиа общим для ВСЕГО проекта
 MEDIA_URL = '/media/'
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
+MEDIA_ROOT = BASE_DIR / 'media'
 
 AUTH_USER_MODEL = 'users.User'
+
+
+# EMAIL_BACKEND — это наш главный рубильник. Вместо консольного бэкенда мы включаем smtp.EmailBackend. Мы говорим Django: «Всё, тесты в терминале кончились. Теперь бери данные и отправляй их в сеть через протокол SMTP».
+#
+# EMAIL_HOST — это сетевой адрес (домен) сервера, к которому Django должен подключиться. У каждого почтового сервиса он свой. У Google это smtp.gmail.com. Это как адрес дома, куда наш бэкенд будет стучаться.
+#
+# EMAIL_PORT — номер «двери» (порта) на сервере Google, через которую нас впустят. Для защищенного соединения обычно используется порт 587.
+#
+# EMAIL_USE_TLS — это флаг безопасности (принимает True или False). TLS (Transport Layer Security) — это протокол шифрования. Если он включен (True), то все данные (включая твой пароль от почты и текст писем) будут шифроваться перед отправкой в интернет, чтобы их никто не смог перехватить по пути.
+#
+# EMAIL_HOST_USER — твой реальный логин (email) от почты Gmail, с которой будут уходить письма (например, твоя_почта@gmail.com).
+#
+# EMAIL_HOST_PASSWORD — самый важный и деликатный момент. Сюда нельзя вводить твой обычный пароль от почты, с которым ты заходишь в аккаунт! Google заблокирует такую попытку ради безопасности. Сюда нужно будет вставить специальный Пароль приложения (App Password) — это 16-значный код, который генерируется в настройках аккаунта Google специально для сторонних программ вроде твоего Django.
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'mrbomba752@gmail.com'
+EMAIL_HOST_PASSWORD = 'lsnr cjdu zvjc hfhl'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
