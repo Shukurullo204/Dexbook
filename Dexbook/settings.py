@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework'
+    'rest_framework',
     "users",
     "auth_2fa",
     "books",
@@ -162,3 +162,5 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'mrbomba752@gmail.com'
 EMAIL_HOST_PASSWORD = 'lsnr cjdu zvjc hfhl'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+

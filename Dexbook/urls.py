@@ -6,7 +6,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    
+    # Подключаем наши API-адреса
+    path('api/auth/', include('auth_2fa.urls')),
 ]
 
 if settings.DEBUG:
